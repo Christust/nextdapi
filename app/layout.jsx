@@ -1,14 +1,13 @@
-import { Provider } from "react-redux";
-import store from "./store";
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.scss";
+import ReduxProvider from "./store/provider";
 
 export default function RootLayout({ children }) {
   return (
-    <Provider store={store}>
-      <html>
-        <body>{children}</body>
-      </html>
-    </Provider>
+    <html>
+      <body>
+        <ReduxProvider>{children}</ReduxProvider>
+      </body>
+    </html>
   );
 }
