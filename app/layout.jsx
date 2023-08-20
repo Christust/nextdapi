@@ -1,3 +1,4 @@
+"use client";
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.scss";
 import ReduxProvider from "./store/provider";
