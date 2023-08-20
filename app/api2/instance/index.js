@@ -4,7 +4,7 @@ import store from "../../store";
 import { setLoaderCount } from "../../store/reducers/loader/loaderSlice";
 
 const instance = axios.create({
-  baseURL: "http://127.0.0.1:8000/",
+  baseURL: "https://daapi-53223c26c4dc.herokuapp.com/",
   timeout: 5000,
 });
 

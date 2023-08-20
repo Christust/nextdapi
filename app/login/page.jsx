@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import authService from "../services/authService";
 
 import { useDispatch } from "react-redux";
-
+import { useSelector } from "react-redux";
 import {
   setUser,
   setToken,
@@ -23,7 +23,7 @@ import { useRouter } from "next/navigation";
 export default function Login() {
   const dispatch = useDispatch();
   const router = useRouter();
-
+  const user = useSelector((state) => state.user);
   // Generamos el valid schema con yup
   const loginSchema = Yup.object().shape({
     email: Yup.string().required("El Usuario es requerido"),
@@ -39,12 +39,17 @@ export default function Login() {
   // Funcion que maneja el submit
   function login(payload) {
     console.log("hola submit");
-    authService.login(payload).then((res) => {
-      dispatch(setUser(res.data.user));
-      dispatch(setToken(res.data.token));
-      dispatch(setRefreshToken(res.data.refresh_token));
-      router.push("/");
-    });
+    authService.login(payload).then(
+      (res) => {
+        dispatch(setUser(res.data.user));
+        dispatch(setToken(res.data.token));
+        dispatch(setRefreshToken(res.data.refresh_token));
+        router.push("/");
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   // Validar Form
@@ -52,7 +57,11 @@ export default function Login() {
     return (!isInitialValid && !dirty) || !isValid;
   }
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (user.profile) {
+      router.push("/");
+    }
+  }, []);
   return (
     <div className="loginPage">
       <div className="card shadow col-6 p-5">
